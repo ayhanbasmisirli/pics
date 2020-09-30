@@ -1,10 +1,11 @@
 <template>
   <div>
-    <h1>{{ Company.name }} Detail</h1>
-    <li>Company Spend Limit {{ Company.cspend }}</li>
+    <h1>Company Detail</h1>
+    <li>{{ Company.name }}</li>
+    <li><b>Company Spend Limit</b> {{ Company.cspend }}</li>
     <li>Company Spend Min Limit {{ Company.cspendmin }}</li>
     <li>Company Spend Min Limit {{ Company.cspendmax }}</li>
-    <li>Company Detail {{ Company.addNote }}</li>
+    <li>Additional Notes {{ Company.addNote }}</li>
   </div>
 </template>
 
