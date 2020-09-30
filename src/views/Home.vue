@@ -1,5 +1,9 @@
 <template>
-  <div class="home"></div>
+  <div class="home">
+    <router-link :to="`/Companies`" class="title">
+      <h1>Companies</h1>
+    </router-link>
+  </div>
 </template>
 
 <script>

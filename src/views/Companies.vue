@@ -2,9 +2,11 @@
   <div class="companies ">
     <h1>Companies</h1>
     <ul v-for="(company, index) in CompaniesArr" :key="index">
-      <li>{{ company.name }}</li>
+      <Company :company="company" :index="index" />
     </ul>
-    <button @click="toggle = !toggle" class="btn-green ">Add Company</button>
+    <button @click="toggle = !toggle" class="btn-green company">
+      {{ toggle ? "&uarr;" : "+" }}
+    </button>
     <div v-show="toggle">
       <form id="form" @submit.prevent="addCompany">
         <Label>Company Name </Label
@@ -30,6 +32,8 @@
         />
 
         <br />
+
+        <h1 v-show="!minmaxx">Minumum cannot be bigger</h1>
         <button type="button" class="btn-green " @click="showModal">
           Additional Notes
         </button>
@@ -42,7 +46,7 @@
         <button
           class="btn-green "
           type="submit"
-          :disabled="!cname.length > 0 && minmax"
+          :disabled="!cname.length > 0 || !minmaxx"
         >
           Save Company
         </button>
@@ -52,10 +56,11 @@
 </template>
 <script>
 import modal from "../components/Modal";
-
+import Company from "../components/Company";
 export default {
   components: {
-    modal
+    modal,
+    Company
   },
   data() {
     return {
@@ -65,7 +70,7 @@ export default {
       cspend: null,
       cspendmax: null,
       cspendmin: null,
-      minmax: null,
+      minmax: false,
       isModalVisible: false,
       addNote: null
     };
@@ -82,7 +87,14 @@ export default {
         cspendmin: this.cspendmin,
         addNote: this.addNote
       });
+
       this.toggle = false;
+      this.cname = "";
+      this.cspend = null;
+      this.cspendmax = null;
+      this.cspendmin = null;
+      this.minmax = null;
+      this.isModalVisible = false;
     },
     showModal() {
       this.isModalVisible = true;
@@ -94,10 +106,20 @@ export default {
       this.addNote = note;
     }
   },
-  watch: {
-    cspendmin() {
-      this.cspendmax < this.cspendmin;
-      return (this.minmax = true);
+  // watch: {
+  //   cspendmin() {
+  //     if (this.cspendmax < this.cspendmin) {
+  //       console.log(this.minmax);
+  //       return (this.minmax = true);
+  //     }
+  //   }
+  // },
+  computed: {
+    minmaxx() {
+      if (this.cspendmax < this.cspendmin) return false;
+      else {
+        return true;
+      }
     }
   }
 };
@@ -108,6 +130,24 @@ export default {
   background: #4aae9b;
   border: 5px solid #4aae9b;
   border-radius: 10px;
+  font-size: 15px;
+  margin-left: 10px;
+}
+.company {
+  border-radius: 50px;
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+}
+:disabled {
+  background: rgb(210, 228, 215);
+  color: black;
+}
+input {
+  width: 20%;
+  padding: 12px 20px;
+  margin: 8px;
+  box-sizing: border-box;
   font-size: 15px;
 }
 </style>

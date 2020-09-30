@@ -10,7 +10,6 @@ export default {
   methods: {
     close() {
       this.$emit("closes");
-
       this.$emit("modalNote", this.note);
     },
     closeM() {
